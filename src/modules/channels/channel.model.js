@@ -30,6 +30,7 @@ class Channel {
             if(err) return err
             else{
                 return new Promise((success, reject) =>{
+                    try{
                         this.collection.insertOne(body)
                         success('channel succesfully added');
                     }catch(e){
