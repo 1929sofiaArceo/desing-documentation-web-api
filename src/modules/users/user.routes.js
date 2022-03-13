@@ -124,7 +124,7 @@ router.get('/:id', userController.getById);
 
  /**
  * @swagger
- *   /api/users/singIn:
+ *   /api/users/signIn:
  *     post:
  *       tags:
  *       - Users

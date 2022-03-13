@@ -30,7 +30,8 @@ class User {
             this.collection.findOne({email: emailParam, password: passwParam}, function(err, result){
                 if(err) reject(err);
                 else{
-                    const token = jwt.sign({email: emailParam, password: passwParam}, process.env.TOKEN, {expiresIn: 60 * 60});
+                    console.log(result);
+                    const token = jwt.sign({email: emailParam, password: passwParam}, 'secretKey', {expiresIn: 60 * 60});
                     success(token);
                 }
             })
