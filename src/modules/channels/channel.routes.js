@@ -82,7 +82,25 @@ router.get('/:id', channelController.getById);
  *           description: channel was created succesfully
  */
  router.post('/', channelController.create);
-
+/**
+ * @swagger
+ *   /api/channels/createLink/{id}:
+ *     put:
+ *       tags:
+ *       - Channels
+ *       description: Create channel link
+ *       consumes:
+ *         - application/json
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           description: The channel's unique ID
+ *       responses: 
+ *         200:
+ *           description: channel with the unique ID
+ */
+ router.put('/createLink/:id', channelController.createLink);
 
 
 /**

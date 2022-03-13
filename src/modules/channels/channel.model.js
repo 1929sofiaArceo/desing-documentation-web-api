@@ -25,15 +25,45 @@ class Channel {
             });
         })
     }
-    create(body){
-        return new Promise((success, reject) =>{
-            try{
-                this.collection.insertOne(body)
-                success('channel succesfully added');
-            }catch(e){
-                reject(e)
+    create(body, token){
+        jwt.verify(token, 'secretKey', (err, resolve)=>{
+            if(err) return err
+            else{
+                return new Promise((success, reject) =>{
+                        this.collection.insertOne(body)
+                        success('channel succesfully added');
+                    }catch(e){
+                        reject(e)
+                    }
+                })
             }
-        })
+        });
+    }
+    createLink(idChannel, token){
+        if(token == null){ //no se ha iniciado sesion
+            return new Promise((success, reject) =>{
+                try{
+                    this.collection.updateOne({_id: idChannel}, { $set: { link: ('www.'+idChannel+'.com')}}, {upsert: true})
+                    success('channelLink with id '+idChannel+' was succesfully created');
+                }catch(e){
+                    reject(e);
+                }
+            })
+        }else{
+            jwt.verify(token, 'secretKey', (err, resolve)=>{
+                if(err) return err
+                else{
+                    return new Promise((success, reject) =>{
+                        try{
+                            this.collection.updateOne({_id: idChannel}, { $set: { link: ('www.'+idChannel+'.com')}}, {upsert: true})
+                            success('channelLink with id '+idChannel+' was succesfully created');
+                        }catch(e){
+                            reject(e);
+                        }
+                    })
+                }
+            });
+        }
     }
     update(idParam, jsonBody){
         return new Promise((success, reject) =>{

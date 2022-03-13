@@ -23,7 +23,9 @@ const channelController = {
     },
     create: (req, res)=>{
         const channel = new Channel();
-        channel.create(req.body).then((results) => {
+        var token = req.headers.authorization;
+        if (!token) return res.sendStatus(401);
+        channel.create(req.body, token).then((results) => {
             if(results){
                 res.send(results);
             }else{
@@ -31,11 +33,21 @@ const channelController = {
             }
         });
     },
+    createLink: (req, res)=>{
+        var id = new ObjectId(req.params.id);
+        console.log(id);
+        const channel = new Channel();
+        channel.createLink(id, req.headers.authorization).then((results) => {
+            if(results){
+                res.send(results);
+            }else{
+                res.sendStatus(404); //not found
+            }
+        });
+    },
     update: (req, res)=>{
         var id = new ObjectId(req.params.id);
         const channel = new Channel();
-        console.log(id);
-        console.log(req.body);
         channel.update(id, req.body).then((results) => {
             if(results){
                 res.send(results);
