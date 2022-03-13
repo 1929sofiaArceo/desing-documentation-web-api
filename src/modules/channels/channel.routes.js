@@ -102,7 +102,35 @@ router.get('/:id', channelController.getById);
  */
  router.put('/createLink/:id', channelController.createLink);
 
-
+/**
+ * @swagger
+ *   /api/channels/joinChannel/{id}:
+ *     put:
+ *       tags:
+ *       - Channels
+ *       description: Add member to channel
+ *       consumes:
+ *         - application/json
+ *       parameters:
+ *         - in: path
+ *           name: id
+ *           required: true
+ *           description: The channel's unique ID
+ *         - in: body
+ *           name: link
+ *           required: true
+ *           description: The channel link to add
+ *           schema:
+ *             type: object
+ *             properties:
+ *               link:
+ *                 type: string
+ * 
+ *       responses: 
+ *         200:
+ *           description: channel with the unique ID
+ */
+ router.put('/joinChannel/:id', channelController.joinChannel);
 /**
  * @swagger
  *   /api/channels/{id}:

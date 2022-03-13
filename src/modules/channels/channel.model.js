@@ -66,6 +66,32 @@ class Channel {
             });
         }
     }
+    joinChannel(channelLink, idParam, token){
+        if(token == null){ //no se ha iniciado sesion
+            return new Promise((success, reject) =>{
+                try{
+                    this.collection.findOne({link: channelLink}, { $set: { newMember: idParam}}, {upsert: true})
+                    success('user with id '+idParam+' was succesfully added to channel '+channelLink);
+                }catch(e){
+                    reject(e);
+                }
+            })
+        }else{
+            jwt.verify(token, 'secretKey', (err, resolve)=>{
+                if(err) return err
+                else{
+                    return new Promise((success, reject) =>{
+                        try{
+                            this.collection.findOne({link: channelLink}, { $set: { newMember: idParam}}, {upsert: true})
+                            success('user with id '+idParam+' was succesfully added to channel '+channelLink);
+                        }catch(e){
+                            reject(e);
+                        }
+                    })
+                }
+            });
+        }
+    }
     update(idParam, jsonBody){
         return new Promise((success, reject) =>{
             try{

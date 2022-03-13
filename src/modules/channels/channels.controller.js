@@ -45,6 +45,17 @@ const channelController = {
             }
         });
     },
+    joinChannel: (req, res)=>{
+        var id = new ObjectId(req.params.id);
+        const channel = new Channel();
+        channel.joinChannel(req.body.link,id, req.headers.authorization).then((results) => {
+            if(results){
+                res.send(results);
+            }else{
+                res.sendStatus(404); //not found
+            }
+        });
+    },
     update: (req, res)=>{
         var id = new ObjectId(req.params.id);
         const channel = new Channel();
